@@ -13,17 +13,48 @@
                         <th scope="col">ელ.ფოსტა</th>
                         <th scope="col">შეტყობინება</th>
                         <th scope="col">თარიღი</th>
+                        <th scope="col">ქმედება</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for message in messages %}
                     <tr>
                         <td>{{ loop.index }}</td>
-                        <td>{{ message.username }}</td>  <!-- name -> username -->
-                        <td>{{ message.user_email }}</td> <!-- email -> user_email -->
+                        <td>{{ message.username }}</td>
+                        <td>{{ message.user_email }}</td>
                         <td>{{ message.message }}</td>
                         <td>{{ message.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>
+                            <!-- ღილაკი პასუხისთვის -->
+                            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#replyModal{{ message.id }}">
+                                უპასუხე
+                            </button>
+                        </td>
                     </tr>
+
+                    <!-- პასუხის მოდა ფანჯარა -->
+                    <div class="modal fade" id="replyModal{{ message.id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">უპასუხე მომხმარებელს: {{ message.username }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form method="POST" action="{{ url_for('reply_message', message_id=message.id) }}">
+                                    <div class="modal-body">
+                                        <textarea name="reply_text" class="form-control" placeholder="შეიყვანეთ პასუხი..." required></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-success">გაგზავნა</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">დახურვა</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                     {% endfor %}
                 </tbody>
             </table>
@@ -43,4 +74,5 @@
         border-radius: 15px;
     }
 </style>
+
 {% endblock %}
