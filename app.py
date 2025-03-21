@@ -6,7 +6,7 @@ from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Message
 from extensions import app, mail,db
 from werkzeug.utils import secure_filename
-#from authlib.integrations.flask_client import OAuth  
+from authlib.integrations.flask_client import OAuth  
 from flask_socketio import SocketIO 
 import os
 from flask_dance.contrib.facebook import make_facebook_blueprint, facebook 
