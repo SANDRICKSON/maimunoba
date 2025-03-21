@@ -8,3 +8,4 @@ gunicorn
 authlib
 Flask-Mail
 flask_dance
+flask_socketio
