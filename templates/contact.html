@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="w-50 p-4 border rounded shadow bg-white">
+        <h3 class="text-center mb-3 text-primary">📞 საკონტაქტო ინფორმაცია</h3>
+        <hr>
+        <p class="mb-2"><strong>📱 ტელეფონი:</strong> <span class="text-dark">1234567890</span></p>
+        <p class="mb-2"><strong>📍 მისამართი:</strong> <span class="text-dark">1234567890</span></p>
+        <p class="mb-3">🔹 <span class="text-dark">1234567890</span></p>
+        <p class="text-center text-muted fst-italic">ასევე შეგიძლიათ სასურველი მესიჯი მიწეროთ ადმინისტრატორს</p>
+        <hr>
+        <div class="mt-4">
+            {% if current_user.is_authenticated %}
+            <a class="btn btn-glow w-100 text-center" href="{{ url_for('messages') }}">✉️ მესიჯის დაწერა</a>
+
+            {% else %}
+                <button class="btn btn-secondary w-100 shadow" disabled>🔒 გთხოვთ გაიარეთ ავტორიზაცია</button>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    /* კონტეინერის ჩრდილები */
+    .shadow {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ღილაკის სტილი */
+    .btn-glow {
+        font-size: 18px;
+        font-family: "BPG Classic Medium", sans-serif;
+        background: linear-gradient(90deg, #0d6efd, #6610f2);
+        color: white;
+        border: none;
+        padding: 10px;
+        transition: all 0.3s ease-in-out;
+    }
+    .btn-glow:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(13, 110, 253, 0.4);
+    }
+
+    /* ბორდერის ვიზუალი */
+    .border {
+        border: 2px solid rgba(0, 123, 255, 0.2);
+    }
+
+    /* ტექსტი */
+    .text-muted {
+        font-size: 14px;
+    }
+</style>
+
+{% endblock %}

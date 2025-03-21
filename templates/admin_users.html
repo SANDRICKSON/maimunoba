@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center text-primary mb-4">დარეგისტრირებული მომხმარებლები</h1>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <table class="table table-hover table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">მომხმარებლის სახელი</th>
+                            <th scope="col">მეილი</th>
+                            <th scope="col">ქვეყანა</th>
+                            <th scope="col">სქესი</th>
+                            <th scope="col">სტატუსი</th>
+                            <th scope="col">მოქმედებები</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.country }}</td>
+                            <td>{{ user.gender }}</td>
+                            <td>
+                                {% if current_user.username == "sandroqatamadze" %} 
+                                    <span class="badge bg-primary">ადმინისტრატორი</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">მომხმარებელი</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if not user.is_admin %}
+                                    <form action="{{ url_for('delete_user', user_id=user.id) }}" method="post" style="display: inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm" title="მომხმარებლის წაშლა">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                    <form action="{{ url_for('make_admin', user_id=user.id) }}" method="post" style="display: inline;">
+                                        <button type="submit" class="btn btn-success btn-sm" title="ადმინად დამატება">
+                                            <i class="fas fa-user-shield"></i>
+                                        </button>
+                                    </form>
+                                {% endif %}
+
+                                {% if current_user.username == "sandroqatamadze" and user.username != "sandroqatamadze" %}
+                                    <form action="{{ url_for('transfer_admin', user_id=user.id) }}" method="post" style="display: inline;">
+                                        <button type="submit" class="btn btn-warning btn-sm" title="ადმინობის გადაცემა">
+                                            <i class="fas fa-user-crown"></i>
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .thead-dark, h1 {
+            font-family: "BPG Classic Medium", sans-serif;
+            font-weight: bold;
+        }
+        .btn i {
+            pointer-events: none;
+        }
+        .badge {
+            font-size: 14px;
+        }
+    </style>
+{% endblock %}

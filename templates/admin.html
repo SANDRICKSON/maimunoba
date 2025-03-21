@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="admin-container">
+    <h2>ადმინის გვერდი</h2>
+    <p>თქვენ შეგიძლიათ დაამატოთ ან გააძევოთ მომხმარებლები</p>
+    <a href="{{ url_for('view_users') }}" class="btn">დარეგისტრირებული მომხმარებლების ხილვა</a>
+    <a href="{{ url_for('admin_messages') }}" class="btn1">მომხმარებლების შეტყობინებების ნახვა</a>
+</div>
+
+<style>
+    body {
+        background-color: #ecf0f1;
+        font-family: "BPG Classic Medium", sans-serif;
+        color: #444;
+    }
+
+    .admin-container {
+        max-width: 500px;
+        background: white;
+        padding: 30px;
+        margin: 80px auto;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 32px;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+    }
+
+    p {
+        font-size: 18px;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        display: block;
+        width: 100%;
+        max-width: 250px;
+        padding: 12px;
+        font-size: 16px;
+        color: white;
+        background-color: #2980b9;
+        border-radius: 30px;
+        text-decoration: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        margin: 20px auto 0;
+    }
+
+    .btn1 {
+    display: block;
+    width: 100%;
+    max-width: 250px;
+    padding: 12px 20px;
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #28a745, #218838);
+    border: none;
+    border-radius: 30px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease-in-out;
+    margin: 20px auto 0;
+}
+
+.btn1:hover {
+    background: linear-gradient(135deg, #34ce57, #28a745);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+}
+
+.btn1:active {
+    background: linear-gradient(135deg, #218838, #1e7e34);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(2px);
+}
+
+    .btn:hover {
+        background-color: #3498db;
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .btn:active {
+        background-color: #1d6fa5;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transform: translateY(2px);
+    }
+</style>
+{% endblock %}

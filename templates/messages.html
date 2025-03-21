@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="w-50 p-4 border rounded shadow bg-white">
+        <p class="text-center text-muted small">📩 შეტყობინებაზე პასუხი მოგივათ იმ მეილზე, რომლითაც დარეგისტრირდით</p>
+        <h3 class="text-center mb-3 text-primary">💬 შეტყობინებები</h3>
+        <hr>
+
+        <!-- შეტყობინებების გამოტანა -->
+        {% for message in messages %}
+            <div class="message-box p-3 mb-3 rounded">
+                <p class="fw-bold text-dark">👤 {{ message.username }} <span class="text-muted">({{ message.user_email }})</span></p>
+                <p class="text-muted">⏳ {{ message.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                <p>💬 {{ message.message }}</p>
+            </div>
+        {% else %}
+            <p class="text-center text-muted">❌ შეტყობინებები ჯერ არ არის.</p>
+        {% endfor %}
+        
+        <hr>
+
+        <!-- შეტყობინების ფორმა -->
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                {{ form.message.label(class="form-label text-primary") }}
+                {{ form.message(class="form-control", placeholder="✍️ შეიყვანეთ თქვენი შეტყობინება...") }}
+            </div>
+            <button type="submit" class="btn btn-glow w-100">🚀 გაგზავნა</button>
+        </form>
+
+    </div>
+</div>
+
+<style>
+    /* ბარათი */
+    .shadow {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* შეტყობინებების ყუთი */
+    .message-box {
+        background: rgba(0, 123, 255, 0.05);
+        border-left: 5px solid #0d6efd;
+        transition: all 0.3s ease-in-out;
+    }
+    .message-box:hover {
+        background: rgba(0, 123, 255, 0.1);
+        transform: scale(1.02);
+    }
+
+    /* ღილაკის ეფექტი */
+    .btn-glow {
+        font-size: 18px;
+        font-family: "BPG Classic Medium", sans-serif;
+        background: linear-gradient(90deg, #0d6efd, #6610f2);
+        color: white;
+        border: none;
+        transition: all 0.3s ease-in-out;
+    }
+    .btn-glow:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(13, 110, 253, 0.4);
+    }
+
+    /* შეყვანის ველი */
+    .form-control {
+        border: 2px solid rgba(0, 123, 255, 0.3);
+        transition: all 0.3s ease-in-out;
+    }
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 10px rgba(13, 110, 253, 0.3);
+    }
+</style>
+
+{% endblock %}

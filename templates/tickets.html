@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+  {% if current_user.is_authenticated %}
+  <button class="btn btn-start">გამოცდის დაწყება</button>
+  {% else %}
+      <button class="btn btn-secondary w-100" disabled>გთხოვთ გაიარეთ ავტორიზაცია, რომ მიიღოთ წვდომა ბილეთებზე</button>
+  {% endif %}
+</div>
+
+<style>
+    body {
+        background-color: #fff;
+        color: #333;
+    }
+
+    .btn-start {
+        background: linear-gradient(45deg, #ff7e5f, #feb47b);
+        color: white;
+        font-size: 1.4rem;
+        padding: 14px 28px;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+    }
+
+    .btn-start:hover {
+        background: linear-gradient(45deg, #feb47b, #ff7e5f);
+        transform: scale(1.05);
+    }
+
+    .btn-start:focus {
+        outline: none;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: 1px solid #5a6268;
+        color: white;
+        font-size: 1.2rem;
+        padding: 12px;
+        border-radius: 5px;
+        box-shadow: none;
+    }
+
+    .btn-secondary:disabled {
+        background-color: #ddd;
+        border-color: #bbb;
+        color: #888;
+    }
+</style>
+{% endblock %}

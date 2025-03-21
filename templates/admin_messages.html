@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center text-primary mb-4">მომხმარებელთა შეტყობინებები</h1>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-hover table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">სახელი</th>
+                        <th scope="col">ელ.ფოსტა</th>
+                        <th scope="col">შეტყობინება</th>
+                        <th scope="col">თარიღი</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for message in messages %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ message.username }}</td>  <!-- name -> username -->
+                        <td>{{ message.user_email }}</td> <!-- email -> user_email -->
+                        <td>{{ message.message }}</td>
+                        <td>{{ message.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .thead-dark, h1 {
+        font-family: "BPG Classic Medium", sans-serif;
+        font-weight: bold;
+    }
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 123, 255, 0.1);
+    }
+    .card {
+        border-radius: 15px;
+    }
+</style>
+{% endblock %}
