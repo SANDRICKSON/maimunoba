@@ -1,0 +1,10 @@
+Flask
+Flask-WTF
+Flask-SQLAlchemy
+Flask-Login
+email_validator
+requests
+gunicorn
+authlib
+Flask-Mail
+flask_dance
