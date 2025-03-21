@@ -14,7 +14,7 @@ from datetime import datetime
 from models import User, ContactMessage
 from forms import RegisterForm, MessageForm, LoginForm, UpdateForm, ForgotPasswordForm,ResetPasswordForm, FormUpdateForm
 from flask_wtf.csrf import CSRFProtect
-
+from models import db, ContactMessage, Reply
 csrf = CSRFProtect(app)
 
 socketio = SocketIO(app)
@@ -26,6 +26,29 @@ app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
 
+
+@app.route("/reply/<int:message_id>", methods=["POST"])
+@login_required
+def reply_message(message_id):
+    reply_text = request.form.get("reply_text")
+    if not reply_text:
+        flash("პასუხი ცარიელია!", "danger")
+        return redirect(url_for("messages"))
+
+    # მოძებნე ორიგინალური შეტყობინება
+    message = Message.query.get_or_404(message_id)
+    
+    # შეინახე პასუხი
+    reply = Reply(
+        message_id=message.id,
+        user_id=current_user.id,  # ვინ უპასუხა
+        reply_text=reply_text
+    )
+    db.session.add(reply)
+    db.session.commit()
+
+    flash("პასუხი წარმატებით გაიგზავნა!", "success")
+    return redirect(url_for("messages"))
 
 
 @app.route("/unread_count")
