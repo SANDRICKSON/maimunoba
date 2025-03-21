@@ -552,12 +552,12 @@ def messages():
     search_query = request.args.get('search', '').strip()
     
     if search_query:
-        messages = Message.query.filter(
-            (Message.username.ilike(f"%{search_query}%")) | 
-            (Message.user_email.ilike(f"%{search_query}%"))
-        ).order_by(Message.timestamp.desc()).all()
+        messages = contactMessage.query.filter(
+            (contactMessage.username.ilike(f"%{search_query}%")) | 
+            (contactMessage.user_email.ilike(f"%{search_query}%"))
+        ).order_by(contactMessage.timestamp.desc()).all()
     else:
-        messages = Message.query.order_by(Message.timestamp.desc()).all()
+        messages = contactMessage.query.order_by(Message.timestamp.desc()).all()
     form = MessageForm()
 
     if form.validate_on_submit():
