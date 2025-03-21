@@ -15,6 +15,13 @@ from models import User, ContactMessage
 from forms import RegisterForm, MessageForm, LoginForm, UpdateForm, ForgotPasswordForm,ResetPasswordForm, FormUpdateForm
 from flask_wtf.csrf import CSRFProtect
 from models import db, ContactMessage, Reply
+from extensions import login_manager
+from models import User  # ან საიდანაც გაქვს User მოდელი
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 csrf = CSRFProtect(app)
 
 socketio = SocketIO(app)
