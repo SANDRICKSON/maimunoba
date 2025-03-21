@@ -14,32 +14,46 @@
                 <p class="fw-bold text-dark">👤 {{ message.username }} <span class="text-muted">({{ message.user_email }})</span></p>
                 <p class="text-muted">⏳ {{ message.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</p>
                 <p>💬 {{ message.message }}</p>
+
+                <!-- "უპასუხეს" ღილაკი -->
+                <button class="btn btn-outline-primary btn-sm reply-btn" data-message-id="{{ message.id }}">📝 უპასუხე</button>
+
+                <!-- პასუხის შეყვანის ველი (დამალული) -->
+                <form method="POST" class="reply-form mt-2 d-none" data-message-id="{{ message.id }}">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-2">
+                        <textarea name="reply_text" class="form-control" rows="2" placeholder="✍️ შეიყვანეთ პასუხი..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-sm">🚀 გაგზავნა</button>
+                </form>
             </div>
         {% else %}
             <p class="text-center text-muted">❌ შეტყობინებები ჯერ არ არის.</p>
         {% endfor %}
         
         <hr>
-
-        <!-- შეტყობინების ფორმა -->
-        <form method="POST">
-            {{ form.hidden_tag() }}
-            <div class="mb-3">
-                {{ form.message.label(class="form-label text-primary") }}
-                {{ form.message(class="form-control", placeholder="✍️ შეიყვანეთ თქვენი შეტყობინება...") }}
-            </div>
-            <button type="submit" class="btn btn-glow w-100">🚀 გაგზავნა</button>
-        </form>
-
     </div>
 </div>
 
-<style>
-    /* ბარათი */
-    .shadow {
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
+<!-- JavaScript ფუნქცია -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".reply-btn").forEach(button => {
+            button.addEventListener("click", function() {
+                let messageId = this.getAttribute("data-message-id");
+                let form = document.querySelector(`.reply-form[data-message-id='${messageId}']`);
+                
+                if (form.classList.contains("d-none")) {
+                    form.classList.remove("d-none");
+                } else {
+                    form.classList.add("d-none");
+                }
+            });
+        });
+    });
+</script>
 
+<style>
     /* შეტყობინებების ყუთი */
     .message-box {
         background: rgba(0, 123, 255, 0.05);
@@ -51,28 +65,23 @@
         transform: scale(1.02);
     }
 
-    /* ღილაკის ეფექტი */
-    .btn-glow {
-        font-size: 18px;
-        font-family: "BPG Classic Medium", sans-serif;
-        background: linear-gradient(90deg, #0d6efd, #6610f2);
+    /* უპასუხე ღილაკი */
+    .reply-btn {
+        font-size: 14px;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+    /* გაგზავნის ღილაკი */
+    .btn-success {
+        background: linear-gradient(90deg, #198754, #28a745);
         color: white;
         border: none;
         transition: all 0.3s ease-in-out;
     }
-    .btn-glow:hover {
+    .btn-success:hover {
         transform: scale(1.05);
-        box-shadow: 0 0 10px rgba(13, 110, 253, 0.4);
-    }
-
-    /* შეყვანის ველი */
-    .form-control {
-        border: 2px solid rgba(0, 123, 255, 0.3);
-        transition: all 0.3s ease-in-out;
-    }
-    .form-control:focus {
-        border-color: #0d6efd;
-        box-shadow: 0 0 10px rgba(13, 110, 253, 0.3);
+        box-shadow: 0 0 10px rgba(25, 135, 84, 0.4);
     }
 </style>
 
