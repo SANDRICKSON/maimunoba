@@ -549,6 +549,15 @@ def privacy():
 @app.route("/messages", methods=["GET", "POST"])
 @login_required
 def messages():
+    search_query = request.args.get('search', '').strip()
+    
+    if search_query:
+        messages = Message.query.filter(
+            (Message.username.ilike(f"%{search_query}%")) | 
+            (Message.user_email.ilike(f"%{search_query}%"))
+        ).order_by(Message.timestamp.desc()).all()
+    else:
+        messages = Message.query.order_by(Message.timestamp.desc()).all()
     form = MessageForm()
 
     if form.validate_on_submit():
